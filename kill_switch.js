@@ -1,33 +1,28 @@
 /**
- * Zenith Shadow Engine - Kill Switch (Functional Version)
- *
- * Manual Override to close all positions via MCP in under 5 seconds.
+ * Zenith Shadow Engine - Kill Switch
  */
 
 const fs = require('fs');
+const path = require('path');
+const MCPClient = require('./lib/mcp-client');
+require('dotenv').config();
 
-class MCPClient {
-    async callTool(server, tool, params) {
-        console.log(`[MCP] Calling ${server}:${tool} with`, params);
-        return { success: true };
-    }
-}
+const BRIDGE_URL = process.env.MCP_BRIDGE_URL || 'http://localhost:3000';
 
 async function killAll() {
     console.log("!!! KILL SWITCH ACTIVATED !!!");
-    const mcp = new MCPClient();
+    const mcp = new MCPClient(BRIDGE_URL);
 
     try {
-        await mcp.callTool("tradingview-mcp", "ui_click", { target: "close_all_positions" });
-        console.log("SUCCESS: All positions closed via MCP.");
-
-        const timestamp = new Date().toISOString().split('T')[0];
-        const logEntry = `| ${timestamp} | KillSwitch | MANUAL OVERRIDE | User activated kill switch. |\n`;
-        fs.appendFileSync('./DECISIONS.log', logEntry);
+        const result = await mcp.callTool("tradingview-mcp", "ui_click", { target: "close_all_positions" });
+        if (result.success) {
+            console.log("SUCCESS: All positions closed.");
+            const timestamp = new Date().toISOString().split('.')[0];
+            fs.appendFileSync('./GUARDIAN.log', `[${timestamp}] MANUAL KILL SWITCH ACTIVATED\n`);
+        }
     } catch (err) {
-        console.error("FAILED to execute Kill Switch:", err);
+        console.error("Kill Switch Failed:", err.message);
     }
-
     process.exit(0);
 }
 
