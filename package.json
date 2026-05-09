@@ -1,0 +1,14 @@
+{
+  "name": "zenith-shadow-engine",
+  "version": "1.0.0",
+  "description": "Autonomous AI Trading System Guardian",
+  "main": "guardian.js",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "scripts": {
+    "start": "node guardian.js",
+    "kill": "npm run kill:active",
+    "kill:active": "node kill_switch.js"
+  }
+}

@@ -1,0 +1,31 @@
+//@version=6
+strategy("Zenith Shadow: EMA Crossover",
+     overlay=true,
+     initial_capital=100000,
+     currency=currency.USDT,
+     commission_type=strategy.commission.percent,
+     commission_value=0.1,
+     slippage=5)
+
+// Inputs
+ema_fast_len = input.int(20, "Fast EMA Length")
+ema_slow_len = input.int(50, "Slow EMA Length")
+
+// Calculations
+ema_fast = ta.ema(close, ema_fast_len)
+ema_slow = ta.ema(close, ema_slow_len)
+
+// Plotting
+plot(ema_fast, color=color.blue, title="Fast EMA")
+plot(ema_slow, color=color.orange, title="Slow EMA")
+
+// Strategy Logic
+long_condition = ta.crossover(ema_fast, ema_slow)
+exit_condition = ta.crossunder(ema_fast, ema_slow)
+
+// Execution
+if (long_condition)
+    strategy.entry("Long", strategy.long)
+
+if (exit_condition)
+    strategy.close("Long")

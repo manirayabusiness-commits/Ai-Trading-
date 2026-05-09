@@ -1,0 +1,15 @@
+{
+  "ticker": "BTCUSDT",
+  "timeframe": "1h",
+  "slippage": 5,
+  "commission": 0.1,
+  "risk_management": {
+    "max_drawdown_percent": 1.0,
+    "daily_loss_limit_percent": 2.0,
+    "initial_capital": 100000
+  },
+  "strategy_inputs": {
+    "ema_fast_len": 20,
+    "ema_slow_len": 50
+  }
+}

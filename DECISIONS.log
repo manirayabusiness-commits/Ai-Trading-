@@ -1,0 +1,7 @@
+# Decisions Log
+
+| Timestamp | Agent | Action | Reason |
+| :--- | :--- | :--- | :--- |
+| 2025-05-22 | Jules | Initialized Repository | Setting up project structure as per PRD. |
+| 2025-05-22 | Jules | Implemented Strategy | Generated Pine Script v6 for EMA 20/50 crossover based on STRATEGY.md. |
+| 2025-05-22 | Jules | Defined Execution Params | Set risk limits and strategy inputs in execution_params.json. |
